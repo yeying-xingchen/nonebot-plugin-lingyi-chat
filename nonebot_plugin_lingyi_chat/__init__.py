@@ -1,6 +1,6 @@
+import aiohttp
 from nonebot import get_plugin_config
 from nonebot.plugin import PluginMetadata
-import http.client
 import json
 from .config import Config
 from nonebot.adapters import Message
@@ -19,23 +19,18 @@ __plugin_meta__ = PluginMetadata(
 
 config = get_plugin_config(Config)
 
-def chat(content):
-    conn = http.client.HTTPSConnection(config.api_url)
-    payload = json.dumps({
-        "content": str(content)
-    })
-    conn.request("POST", "/", payload)
-    res = conn.getresponse()
-    data = res.read()
-    print(data.decode("utf-8"))
+async def chat(content):
+    async with aiohttp.ClientSession() as session:
+        async with session.post(config.api_url, json={'content': content}) as resp:
+            resp_json = await resp.json()
+            return await resp_json["response"]["response"]
 
 chat_command = on_command("chat", aliases={"聊天"}, priority=10, block=True)
 
 @chat_command.handle()
 async def command_handler(args: Message = CommandArg()):
     if content := args.extract_plain_text():
-        message = chat(content)
-        await chat_command.finish(message)
+        response_data = await chat(content)
+        await chat_command.finish(str(response_data))
     else:
         await chat_command.finish("请输入聊天内容。")
-
