@@ -20,7 +20,7 @@ __plugin_meta__ = PluginMetadata(
 config = get_plugin_config(Config)
 
 def chat(content):
-    conn = http.client.HTTPSConnection("chat.ai.hixinghai.us.kg")
+    conn = http.client.HTTPSConnection(config.api_url)
     payload = json.dumps({
         "content": str(content)
     })
