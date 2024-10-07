@@ -14,7 +14,7 @@ __plugin_meta__ = PluginMetadata(
     type="application",
     homepage="https://github.com/yeying-xingchen/nonebot-plugin-lingyi-chat",
     config=Config,
-    supported_adapters={"~onebot.v11", "~qq"},
+    supported_adapters=None,
 )
 
 config = get_plugin_config(Config)
