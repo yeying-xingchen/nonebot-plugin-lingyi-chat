@@ -24,6 +24,7 @@ _✨ 灵翼系列插件-聊天 ✨_
 ## 📖 介绍
 
 基于部署在CFWorkers的LLM API在Nonebot2上提供聊天服务。
+示例API：ai.hixinghai.us.kg
 
 ## 💿 安装
 
